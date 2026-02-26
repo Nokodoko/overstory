@@ -451,10 +451,12 @@ export async function slingCommand(args: string[]): Promise<void> {
 
 		// 6. Validate task exists and is in a workable state (if tracker enabled)
 		const tracker = createTrackerClient(resolvedBackend, config.project.root);
+		let issueTitle: string | undefined;
 		if (config.taskTracker.enabled) {
 			let issue: TrackerIssue;
 			try {
 				issue = await tracker.show(taskId);
+				issueTitle = issue.title;
 			} catch (err) {
 				throw new AgentError(`Task "${taskId}" not found or inaccessible`, {
 					agentName: name,
@@ -619,7 +621,7 @@ export async function slingCommand(args: string[]): Promise<void> {
 			beadId: taskId,
 			tmuxSession: tmuxSessionName,
 			state: "booting",
-			taskType: inferTaskType(taskId),
+			taskType: inferTaskType(issueTitle ?? taskId),
 			pid,
 			parentAgent: parentAgent,
 			depth,

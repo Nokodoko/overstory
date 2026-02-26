@@ -253,7 +253,7 @@ async function startSupervisor(args: string[]): Promise<void> {
 			beadId: flags.task,
 			tmuxSession,
 			state: "booting",
-			taskType: inferTaskType(flags.task),
+			taskType: inferTaskType(issue.title),
 			pid,
 			parentAgent: flags.parent,
 			depth: flags.depth,
