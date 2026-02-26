@@ -29,7 +29,7 @@ import { createMulchClient } from "../mulch/client.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession, MulchDoctorResult, MulchPruneResult, MulchStatus } from "../types.ts";
 import { listWorktrees, removeWorktree } from "../worktree/manager.ts";
-import { killSession, listSessions } from "../worktree/tmux.ts";
+import { killSession, listSessions } from "../worktree/multiplexer.ts";
 
 function hasFlag(args: string[], flag: string): boolean {
 	return args.includes(flag);

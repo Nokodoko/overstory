@@ -26,7 +26,7 @@ import { createEventStore } from "../events/store.ts";
 import { createMulchClient } from "../mulch/client.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession, EventStore, HealthCheck } from "../types.ts";
-import { isSessionAlive, killSession } from "../worktree/tmux.ts";
+import { isSessionAlive, killSession } from "../worktree/multiplexer.ts";
 import { evaluateHealth, transitionState } from "./health.ts";
 import { triageAgent } from "./triage.ts";
 

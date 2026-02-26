@@ -29,7 +29,7 @@ import {
 	killSession,
 	sendKeys,
 	waitForTuiReady,
-} from "../worktree/tmux.ts";
+} from "../worktree/multiplexer.ts";
 import { isRunningAsRoot } from "./sling.ts";
 
 /** Default coordinator agent name. */

@@ -39,7 +39,7 @@ import type { TrackerIssue } from "../tracker/factory.ts";
 import { createTrackerClient, resolveBackend, trackerCliName } from "../tracker/factory.ts";
 import type { AgentSession, OverlayConfig } from "../types.ts";
 import { createWorktree } from "../worktree/manager.ts";
-import { createSession, sendKeys, waitForTuiReady } from "../worktree/tmux.ts";
+import { createSession, sendKeys, waitForTuiReady } from "../worktree/multiplexer.ts";
 
 /**
  * Calculate how many milliseconds to sleep before spawning a new agent,

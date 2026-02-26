@@ -13,7 +13,7 @@ import { loadConfig } from "../config.ts";
 import { AgentError, ValidationError } from "../errors.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import { removeWorktree } from "../worktree/manager.ts";
-import { isSessionAlive, killSession } from "../worktree/tmux.ts";
+import { isSessionAlive, killSession } from "../worktree/multiplexer.ts";
 
 /** Dependency injection for testing. Uses real implementations when omitted. */
 export interface StopDeps {

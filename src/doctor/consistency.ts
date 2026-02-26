@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession, OverstoryConfig } from "../types.ts";
 import { listWorktrees } from "../worktree/manager.ts";
-import { isProcessAlive, listSessions } from "../worktree/tmux.ts";
+import { isProcessAlive, listSessions } from "../worktree/multiplexer.ts";
 import type { DoctorCheck } from "./types.ts";
 
 /**

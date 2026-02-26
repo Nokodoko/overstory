@@ -17,7 +17,7 @@ import { createMetricsStore } from "../metrics/store.ts";
 import { createMulchClient } from "../mulch/client.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentIdentity, AgentManifest, SessionCheckpoint, SessionMetrics } from "../types.ts";
-import { getCurrentSessionName } from "../worktree/tmux.ts";
+import { getCurrentSessionName } from "../worktree/multiplexer.ts";
 
 /**
  * Gitignore content for .overstory/.gitignore.

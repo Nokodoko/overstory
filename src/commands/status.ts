@@ -14,7 +14,7 @@ import { createMetricsStore } from "../metrics/store.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession } from "../types.ts";
 import { listWorktrees } from "../worktree/manager.ts";
-import { listSessions } from "../worktree/tmux.ts";
+import { listSessions } from "../worktree/multiplexer.ts";
 
 // ---------------------------------------------------------------------------
 // Subprocess result cache (TTL-based, module-level)

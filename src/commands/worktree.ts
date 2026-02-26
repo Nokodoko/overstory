@@ -13,7 +13,7 @@ import { createMailStore } from "../mail/store.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession } from "../types.ts";
 import { isBranchMerged, listWorktrees, removeWorktree } from "../worktree/manager.ts";
-import { isSessionAlive, killSession } from "../worktree/tmux.ts";
+import { isSessionAlive, killSession } from "../worktree/multiplexer.ts";
 
 function hasFlag(args: string[], flag: string): boolean {
 	return args.includes(flag);
