@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   tmux_session TEXT NOT NULL,
   state TEXT NOT NULL DEFAULT 'booting'
     CHECK(state IN ('booting','working','completed','stalled','zombie')),
-  task_type TEXT CHECK(phase IS NULL OR phase IN ('spec','plan','implement','review','test','merge','research')),
+  task_type TEXT CHECK(task_type IS NULL OR task_type IN ('spec','plan','implement','review','test','merge','research')),
   pid INTEGER,
   parent_agent TEXT,
   depth INTEGER NOT NULL DEFAULT 0,
@@ -93,9 +93,9 @@ const CREATE_INDEXES = `
 CREATE INDEX IF NOT EXISTS idx_sessions_state ON sessions(state);
 CREATE INDEX IF NOT EXISTS idx_sessions_run ON sessions(run_id)`;
 
-const MIGRATE_ADD_PHASE = `
+const MIGRATE_ADD_TASK_TYPE = `
 ALTER TABLE sessions ADD COLUMN task_type TEXT
-  CHECK(phase IS NULL OR phase IN ('spec','plan','implement','review','test','merge','research'))
+  CHECK(task_type IS NULL OR task_type IN ('spec','plan','implement','review','test','merge','research'))
 `;
 
 const CREATE_RUNS_TABLE = `
@@ -184,7 +184,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 
 	// Migrate: add phase column if missing
 	try {
-		db.exec(MIGRATE_ADD_PHASE);
+		db.exec(MIGRATE_ADD_TASK_TYPE);
 	} catch {
 		// Column already exists
 	}
