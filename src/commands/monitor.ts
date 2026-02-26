@@ -171,6 +171,7 @@ async function startMonitor(args: string[]): Promise<void> {
 			beadId: "", // No specific bead assignment
 			tmuxSession,
 			state: "booting",
+			phase: null,
 			pid,
 			parentAgent: null, // Top of hierarchy (alongside coordinator)
 			depth: 0,

@@ -618,6 +618,7 @@ export async function slingCommand(args: string[]): Promise<void> {
 			beadId: taskId,
 			tmuxSession: tmuxSessionName,
 			state: "booting",
+			phase: null,
 			pid,
 			parentAgent: parentAgent,
 			depth,

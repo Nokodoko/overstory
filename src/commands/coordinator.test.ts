@@ -275,6 +275,7 @@ function makeCoordinatorSession(overrides: Partial<AgentSession> = {}): AgentSes
 		beadId: "",
 		tmuxSession: "overstory-test-project-coordinator",
 		state: "working",
+			phase: null,
 		pid: 99999,
 		parentAgent: null,
 		depth: 0,
@@ -603,6 +604,7 @@ describe("startCoordinator", () => {
 		const deadSession = makeCoordinatorSession({
 			id: "session-dead-coordinator",
 			state: "working",
+			phase: null,
 		});
 		saveSessionsToDb([deadSession]);
 

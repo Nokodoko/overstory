@@ -33,6 +33,7 @@ describe("resolveGroupAddress", () => {
 			beadId: "bead-001",
 			tmuxSession: `overstory-test-${agentName}`,
 			state: "working",
+			phase: null,
 			pid: 12345,
 			parentAgent: null,
 			depth: 0,

@@ -160,6 +160,9 @@ export type Capability = (typeof SUPPORTED_CAPABILITIES)[number];
 
 export type AgentState = "booting" | "working" | "completed" | "stalled" | "zombie";
 
+/** Agent work phase - describes what kind of task is being performed */
+export type AgentPhase = "spec" | "plan" | "implement" | "review" | "test" | "merge" | "research";
+
 export interface AgentSession {
 	id: string; // Unique session ID
 	agentName: string; // Unique per-session name
@@ -169,6 +172,7 @@ export interface AgentSession {
 	beadId: string; // Task being worked
 	tmuxSession: string; // Tmux session name
 	state: AgentState;
+	phase: AgentPhase | null; // Current work phase (spec, plan, implement, etc.)
 	pid: number | null; // Claude Code PID
 	parentAgent: string | null; // Who spawned this agent (null = orchestrator)
 	depth: number; // 0 = direct from orchestrator

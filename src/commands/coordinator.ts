@@ -384,6 +384,7 @@ async function startCoordinator(args: string[], deps: CoordinatorDeps = {}): Pro
 			beadId: "", // No specific bead assignment
 			tmuxSession,
 			state: "booting",
+			phase: null,
 			pid,
 			parentAgent: null, // Top of hierarchy
 			depth: 0,

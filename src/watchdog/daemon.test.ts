@@ -69,6 +69,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "test-task",
 		tmuxSession: "overstory-test-agent",
 		state: "working",
+			phase: null,
 		pid: process.pid, // Use our own PID so isProcessRunning returns true
 		parentAgent: null,
 		depth: 0,
@@ -189,6 +190,7 @@ describe("daemon tick", () => {
 	test("tick with healthy sessions produces no state changes", async () => {
 		const session = makeSession({
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -223,6 +225,7 @@ describe("daemon tick", () => {
 			agentName: "dead-agent",
 			tmuxSession: "overstory-dead-agent",
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -261,6 +264,7 @@ describe("daemon tick", () => {
 			agentName: "zombie-agent",
 			tmuxSession: "overstory-zombie-agent",
 			state: "working",
+			phase: null,
 			lastActivity: oldActivity,
 		});
 
@@ -296,6 +300,7 @@ describe("daemon tick", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 
@@ -339,6 +344,7 @@ describe("daemon tick", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 0,
 			stalledSince,
@@ -377,6 +383,7 @@ describe("daemon tick", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -422,6 +429,7 @@ describe("daemon tick", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -467,6 +475,7 @@ describe("daemon tick", () => {
 			agentName: "doomed-agent",
 			tmuxSession: "overstory-doomed-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 2,
 			stalledSince,
@@ -502,6 +511,7 @@ describe("daemon tick", () => {
 			agentName: "retry-agent",
 			tmuxSession: "overstory-retry-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -540,6 +550,7 @@ describe("daemon tick", () => {
 			agentName: "recovered-agent",
 			tmuxSession: "overstory-recovered-agent",
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(), // Recent activity
 			escalationLevel: 2,
 			stalledSince: new Date(Date.now() - 130_000).toISOString(),
@@ -572,6 +583,7 @@ describe("daemon tick", () => {
 				agentName: "agent-alpha",
 				tmuxSession: "overstory-agent-alpha",
 				state: "working",
+			phase: null,
 				lastActivity: new Date().toISOString(),
 			}),
 			makeSession({
@@ -579,6 +591,7 @@ describe("daemon tick", () => {
 				agentName: "agent-beta",
 				tmuxSession: "overstory-agent-beta",
 				state: "working",
+			phase: null,
 				// Make beta's tmux dead so it transitions to zombie
 				lastActivity: new Date().toISOString(),
 			}),
@@ -587,6 +600,7 @@ describe("daemon tick", () => {
 				agentName: "agent-gamma",
 				tmuxSession: "overstory-agent-gamma",
 				state: "completed",
+			phase: null,
 				lastActivity: new Date().toISOString(),
 			}),
 		];
@@ -637,6 +651,7 @@ describe("daemon tick", () => {
 	test("session persistence: state unchanged when nothing changes", async () => {
 		const session = makeSession({
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -688,6 +703,7 @@ describe("daemon tick", () => {
 				agentName: "healthy",
 				tmuxSession: "overstory-healthy",
 				state: "working",
+			phase: null,
 				lastActivity: new Date(now).toISOString(),
 			}),
 			makeSession({
@@ -695,6 +711,7 @@ describe("daemon tick", () => {
 				agentName: "dying",
 				tmuxSession: "overstory-dying",
 				state: "working",
+			phase: null,
 				lastActivity: new Date(now).toISOString(),
 			}),
 			makeSession({
@@ -702,6 +719,7 @@ describe("daemon tick", () => {
 				agentName: "stale",
 				tmuxSession: "overstory-stale",
 				state: "working",
+			phase: null,
 				lastActivity: new Date(now - 60_000).toISOString(),
 			}),
 			makeSession({
@@ -709,6 +727,7 @@ describe("daemon tick", () => {
 				agentName: "done",
 				tmuxSession: "overstory-done",
 				state: "completed",
+			phase: null,
 			}),
 		];
 
@@ -767,6 +786,7 @@ describe("daemon tick", () => {
 	test("booting session with recent activity transitions to working", async () => {
 		const session = makeSession({
 			state: "booting",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -801,6 +821,7 @@ describe("daemon tick", () => {
 			beadId: "task",
 			tmuxSession: "overstory-old-agent",
 			state: "working",
+			phase: null,
 			pid: process.pid,
 			escalationLevel: 0,
 			stalledSince: null,
@@ -845,6 +866,7 @@ describe("daemon event recording", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 
@@ -889,6 +911,7 @@ describe("daemon event recording", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 0,
 			stalledSince,
@@ -935,6 +958,7 @@ describe("daemon event recording", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -981,6 +1005,7 @@ describe("daemon event recording", () => {
 			agentName: "doomed-agent",
 			tmuxSession: "overstory-doomed-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 2,
 			stalledSince,
@@ -1025,6 +1050,7 @@ describe("daemon event recording", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 
@@ -1063,6 +1089,7 @@ describe("daemon event recording", () => {
 			agentName: "stalled-agent",
 			tmuxSession: "overstory-stalled-agent",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 
@@ -1136,6 +1163,7 @@ describe("daemon mulch failure recording", () => {
 			beadId: "task-123",
 			tmuxSession: "overstory-dying-agent",
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -1172,6 +1200,7 @@ describe("daemon mulch failure recording", () => {
 			beadId: "task-456",
 			tmuxSession: "overstory-triaged-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -1210,6 +1239,7 @@ describe("daemon mulch failure recording", () => {
 			agentName: "retry-agent",
 			tmuxSession: "overstory-retry-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -1242,6 +1272,7 @@ describe("daemon mulch failure recording", () => {
 			agentName: "extend-agent",
 			tmuxSession: "overstory-extend-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 1,
 			stalledSince,
@@ -1274,6 +1305,7 @@ describe("daemon mulch failure recording", () => {
 			beadId: "task-789",
 			tmuxSession: "overstory-beaded-agent",
 			state: "working",
+			phase: null,
 			lastActivity: new Date().toISOString(),
 		});
 
@@ -1304,6 +1336,7 @@ describe("daemon mulch failure recording", () => {
 			beadId: "task-999",
 			tmuxSession: "overstory-doomed-agent",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 			escalationLevel: 2,
 			stalledSince,
@@ -1345,6 +1378,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1354,6 +1388,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1363,6 +1398,7 @@ describe("run completion detection", () => {
 				capability: "coordinator",
 				tmuxSession: "overstory-agent-fake-coordinator",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1400,6 +1436,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1409,6 +1446,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1442,6 +1480,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1451,6 +1490,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1486,6 +1526,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1495,6 +1536,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1528,6 +1570,7 @@ describe("run completion detection", () => {
 				capability: "coordinator",
 				tmuxSession: "overstory-agent-fake-coordinator",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1537,6 +1580,7 @@ describe("run completion detection", () => {
 				capability: "monitor",
 				tmuxSession: "overstory-agent-fake-monitor",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1546,6 +1590,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1555,6 +1600,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1592,6 +1638,7 @@ describe("run completion detection", () => {
 				capability: "coordinator",
 				tmuxSession: "overstory-agent-fake-coordinator",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1601,6 +1648,7 @@ describe("run completion detection", () => {
 				capability: "monitor",
 				tmuxSession: "overstory-agent-fake-monitor",
 				state: "working",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1634,6 +1682,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1643,6 +1692,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1692,6 +1742,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1701,6 +1752,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1733,6 +1785,7 @@ describe("run completion detection", () => {
 				capability: "scout",
 				tmuxSession: "overstory-agent-fake-scout-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1742,6 +1795,7 @@ describe("run completion detection", () => {
 				capability: "scout",
 				tmuxSession: "overstory-agent-fake-scout-two",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1779,6 +1833,7 @@ describe("run completion detection", () => {
 				capability: "scout",
 				tmuxSession: "overstory-agent-fake-scout-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1788,6 +1843,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1823,6 +1879,7 @@ describe("run completion detection", () => {
 				capability: "reviewer",
 				tmuxSession: "overstory-agent-fake-reviewer-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),
@@ -1858,6 +1915,7 @@ describe("run completion detection", () => {
 				capability: "builder",
 				tmuxSession: "overstory-agent-fake-builder-one",
 				state: "completed",
+			phase: null,
 				runId,
 				lastActivity: new Date().toISOString(),
 			}),

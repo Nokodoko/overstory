@@ -166,6 +166,7 @@ describe("--all", () => {
 			beadId: "task-1",
 			tmuxSession: "overstory-test-agent",
 			state: "completed",
+			phase: null,
 			pid: 12345,
 			parentAgent: null,
 			depth: 1,
@@ -310,6 +311,7 @@ describe("individual flags", () => {
 			beadId: "task-1",
 			tmuxSession: "overstory-test-agent",
 			state: "completed",
+			phase: null,
 			pid: 12345,
 			parentAgent: null,
 			depth: 1,
@@ -431,6 +433,7 @@ describe("synthetic session-end events", () => {
 			beadId: "task-1",
 			tmuxSession: "overstory-test-builder",
 			state: "working",
+			phase: null,
 			pid: 12345,
 			parentAgent: null,
 			depth: 1,
@@ -539,6 +542,7 @@ describe("synthetic session-end events", () => {
 				id: "session-123",
 				runId: "run-456",
 				state: "working",
+			phase: null,
 			}),
 		];
 		await Bun.write(sessionsPath, JSON.stringify(sessions));

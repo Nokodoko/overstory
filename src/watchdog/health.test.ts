@@ -39,6 +39,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "test-task",
 		tmuxSession: "overstory-test-agent",
 		state: "booting",
+			phase: null,
 		pid: ALIVE_PID,
 		parentAgent: null,
 		depth: 0,
@@ -202,6 +203,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
@@ -215,6 +217,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "working",
+			phase: null,
 			lastActivity: oldActivity,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
@@ -228,6 +231,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "monitor",
 			state: "working",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
@@ -240,6 +244,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "booting",
+			phase: null,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
 
@@ -252,6 +257,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "stalled",
+			phase: null,
 			lastActivity: staleActivity,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
@@ -265,6 +271,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "working",
+			phase: null,
 		});
 		const check = evaluateHealth(session, false, THRESHOLDS);
 
@@ -276,6 +283,7 @@ describe("evaluateHealth", () => {
 		const session = makeSession({
 			capability: "coordinator",
 			state: "working",
+			phase: null,
 			pid: DEAD_PID,
 		});
 		const check = evaluateHealth(session, true, THRESHOLDS);
@@ -321,6 +329,7 @@ describe("transitionState", () => {
 	test("advances from booting to working", () => {
 		const check = {
 			state: "working" as const,
+					phase: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -351,6 +360,7 @@ describe("transitionState", () => {
 	test("never regresses from stalled to working", () => {
 		const check = {
 			state: "working" as const,
+					phase: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -366,6 +376,7 @@ describe("transitionState", () => {
 	test("never regresses from zombie to booting", () => {
 		const check = {
 			state: "booting" as const,
+					phase: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -381,6 +392,7 @@ describe("transitionState", () => {
 	test("same state stays the same", () => {
 		const check = {
 			state: "working" as const,
+					phase: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
