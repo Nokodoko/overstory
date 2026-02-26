@@ -38,6 +38,7 @@ import { createRunStore } from "../sessions/store.ts";
 import type { TrackerIssue } from "../tracker/factory.ts";
 import { createTrackerClient, resolveBackend, trackerCliName } from "../tracker/factory.ts";
 import type { AgentSession, OverlayConfig } from "../types.ts";
+import { inferTaskType } from "../types.ts";
 import { createWorktree } from "../worktree/manager.ts";
 import { createSession, sendKeys, waitForTuiReady } from "../worktree/multiplexer.ts";
 
@@ -618,7 +619,7 @@ export async function slingCommand(args: string[]): Promise<void> {
 			beadId: taskId,
 			tmuxSession: tmuxSessionName,
 			state: "booting",
-			taskType: null,
+			taskType: inferTaskType(taskId),
 			pid,
 			parentAgent: parentAgent,
 			depth,

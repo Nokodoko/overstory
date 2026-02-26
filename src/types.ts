@@ -159,9 +159,24 @@ export type Capability = (typeof SUPPORTED_CAPABILITIES)[number];
 // === Agent Session ===
 
 export type AgentState = "booting" | "working" | "completed" | "stalled" | "zombie";
-
 /** Agent work phase - describes what kind of task is being performed */
 export type TaskType = "spec" | "plan" | "implement" | "review" | "test" | "merge" | "research";
+
+/** Infer TaskType from task description or title */
+export function inferTaskType(text: string): TaskType | null {
+	const lower = text.toLowerCase();
+	
+	// Order matters - more specific matches first
+	if (/\b(spec|specification|define|requirements?)\b/.test(lower)) return "spec";
+	if (/\b(plan|design|architect|outline)\b/.test(lower)) return "plan";
+	if (/\b(review|check|audit|verify)\b/.test(lower)) return "review";
+	if (/\b(test|testing|tests)\b/.test(lower)) return "test";
+	if (/\b(merge|pr|pull.?request)\b/.test(lower)) return "merge";
+	if (/\b(research|investigate|explore|analyze)\b/.test(lower)) return "research";
+	if (/\b(implement|build|create|add|fix|update|refactor|write)\b/.test(lower)) return "implement";
+	
+	return null;
+}
 
 export interface AgentSession {
 	id: string; // Unique session ID

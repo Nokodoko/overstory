@@ -22,6 +22,7 @@ import { AgentError, ValidationError } from "../errors.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import { createTrackerClient, resolveBackend, trackerCliName } from "../tracker/factory.ts";
 import type { AgentSession } from "../types.ts";
+import { inferTaskType } from "../types.ts";
 import {
 	createSession,
 	isSessionAlive,
@@ -252,7 +253,7 @@ async function startSupervisor(args: string[]): Promise<void> {
 			beadId: flags.task,
 			tmuxSession,
 			state: "booting",
-			taskType: null,
+			taskType: inferTaskType(flags.task),
 			pid,
 			parentAgent: flags.parent,
 			depth: flags.depth,

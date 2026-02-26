@@ -22,6 +22,7 @@ import { AgentError, ValidationError } from "../errors.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import { createRunStore } from "../sessions/store.ts";
 import type { AgentSession } from "../types.ts";
+import { inferTaskType } from "../types.ts";
 import { isProcessRunning } from "../watchdog/health.ts";
 import {
 	createSession,

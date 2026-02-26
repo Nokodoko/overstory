@@ -46,7 +46,7 @@ interface SessionRow {
 	task_id: string;
 	tmux_session: string;
 	state: string;
-	taskType: string | null;
+	task_type: string | null;
 	pid: number | null;
 	parent_agent: string | null;
 	depth: number;
@@ -123,7 +123,7 @@ function rowToSession(row: SessionRow): AgentSession {
 		beadId: row.task_id,
 		tmuxSession: row.tmux_session,
 		state: row.state as AgentState,
-		taskType: (row.taskType as import("../types.ts").TaskType) ?? null,
+		taskType: (row.task_type as import("../types.ts").TaskType) ?? null,
 		pid: row.pid,
 		parentAgent: row.parent_agent,
 		depth: row.depth,
@@ -228,7 +228,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 			task_id = excluded.task_id,
 			tmux_session = excluded.tmux_session,
 			state = excluded.state,
-			task_type = excluded.taskType,
+			task_type = excluded.task_type,
 			pid = excluded.pid,
 			parent_agent = excluded.parent_agent,
 			depth = excluded.depth,
