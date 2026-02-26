@@ -28,7 +28,7 @@ function normalizeSession(raw: Record<string, unknown>): AgentSession {
 		beadId: raw.beadId as string,
 		tmuxSession: raw.tmuxSession as string,
 		state: raw.state as AgentSession["state"],
-		phase: (raw.phase as import("../types.ts").AgentPhase | null) ?? null,
+		taskType: (raw.taskType as import("../types.ts").TaskType | null) ?? null,
 		pid: (raw.pid as number | null) ?? null,
 		parentAgent: (raw.parentAgent as string | null) ?? null,
 		depth: (raw.depth as number) ?? 0,

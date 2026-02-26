@@ -70,7 +70,7 @@ describe("worktreeCommand", () => {
 			beadId: "task-1",
 			tmuxSession: "overstory-test-agent-fake", // FAKE tmux session name
 			state: "working",
-			phase: null,
+			taskType: null,
 			pid: 12345,
 			parentAgent: null,
 			depth: 0,
@@ -160,7 +160,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-1",
 					tmuxSession: "overstory-test-agent",
 					state: "working",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -208,7 +208,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-1",
 					tmuxSession: "overstory-test-agent",
 					state: "working",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -297,7 +297,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-done",
 					tmuxSession: "overstory-completed-agent",
 					state: "completed",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -352,7 +352,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-x",
 					tmuxSession: "overstory-done-agent",
 					state: "completed",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -391,7 +391,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-ghost",
 					tmuxSession: "overstory-ghost-agent",
 					state: "zombie",
-			phase: null,
+			taskType: null,
 					pid: null,
 					parentAgent: null,
 					depth: 0,
@@ -446,7 +446,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-stuck",
 					tmuxSession: "overstory-stalled-agent",
 					state: "stalled",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -496,7 +496,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-done",
 					tmuxSession: "overstory-completed-agent-fake",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 				makeSession({
 					id: "session-2",
@@ -506,7 +506,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-wip",
 					tmuxSession: "overstory-working-agent-fake",
 					state: "working",
-			phase: null,
+			taskType: null,
 					pid: 12346,
 				}),
 			]);
@@ -559,7 +559,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/completed-agent/task-done",
 					beadId: "task-done",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 				makeSession({
 					id: "session-2",
@@ -568,7 +568,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/working-agent/task-wip",
 					beadId: "task-wip",
 					state: "working",
-			phase: null,
+			taskType: null,
 				}),
 				makeSession({
 					id: "session-3",
@@ -577,7 +577,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/stalled-agent/task-stuck",
 					beadId: "task-stuck",
 					state: "stalled",
-			phase: null,
+			taskType: null,
 				}),
 			]);
 
@@ -613,7 +613,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-1",
 					tmuxSession: "overstory-agent-1",
 					state: "completed",
-			phase: null,
+			taskType: null,
 					pid: 12345,
 					parentAgent: null,
 					depth: 0,
@@ -632,7 +632,7 @@ describe("worktreeCommand", () => {
 					beadId: "task-2",
 					tmuxSession: "overstory-agent-2",
 					state: "completed",
-			phase: null,
+			taskType: null,
 					pid: 12346,
 					parentAgent: null,
 					depth: 0,
@@ -673,7 +673,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/unmerged-agent/task-unmerged",
 					beadId: "task-unmerged",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 			]);
 
@@ -711,7 +711,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/unmerged-agent/task-force",
 					beadId: "task-force",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 			]);
 
@@ -747,7 +747,7 @@ describe("worktreeCommand", () => {
 					branchName: branch,
 					beadId: "task-merged",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 			]);
 
@@ -782,7 +782,7 @@ describe("worktreeCommand", () => {
 					branchName: "overstory/unmerged-json-agent/task-json",
 					beadId: "task-json",
 					state: "completed",
-			phase: null,
+			taskType: null,
 				}),
 			]);
 

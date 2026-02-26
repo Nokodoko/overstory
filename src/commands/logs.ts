@@ -508,7 +508,7 @@ export async function logsCommand(args: string[]): Promise<void> {
 		return;
 	}
 
-	// Discovery phase: find all events.ndjson files
+	// Discovery taskType: find all events.ndjson files
 	const discovered = await discoverLogFiles(logsDir, agentName);
 
 	if (discovered.length === 0) {
@@ -520,7 +520,7 @@ export async function logsCommand(args: string[]): Promise<void> {
 		return;
 	}
 
-	// Parsing phase: read and parse all files
+	// Parsing taskType: read and parse all files
 	const allEvents: LogEvent[] = [];
 
 	for (const { path } of discovered) {

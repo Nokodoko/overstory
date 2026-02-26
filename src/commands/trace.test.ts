@@ -536,7 +536,7 @@ describe("traceCommand", () => {
 				beadId: "overstory-rj1k",
 				tmuxSession: "tmux-001",
 				state: "completed",
-			phase: null,
+			taskType: null,
 				pid: null,
 				parentAgent: null,
 				depth: 0,

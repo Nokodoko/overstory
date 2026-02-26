@@ -49,7 +49,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "task-1",
 		tmuxSession: "overstory-test-agent",
 		state: "working",
-			phase: null,
+			taskType: null,
 		pid: 12345,
 		parentAgent: null,
 		depth: 0,
@@ -152,7 +152,7 @@ describe("nudgeAgent", () => {
 				agentName: "orchestrator",
 				tmuxSession: "overstory-orchestrator",
 				state: "working",
-			phase: null,
+			taskType: null,
 			}),
 		]);
 		await Bun.write(

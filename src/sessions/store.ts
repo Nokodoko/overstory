@@ -23,7 +23,7 @@ export interface SessionStore {
 	/** Update only the state of a session. */
 	updateState(agentName: string, state: AgentState): void;
 	/** Update only the phase of a session. */
-	updatePhase(agentName: string, phase: import("../types.ts").AgentPhase | null): void;
+	updateTaskType(agentName: string, taskType: import("../types.ts").TaskType | null): void;
 	/** Update lastActivity to current ISO timestamp. */
 	updateLastActivity(agentName: string): void;
 	/** Update escalation level and stalled timestamp. */
@@ -46,7 +46,7 @@ interface SessionRow {
 	task_id: string;
 	tmux_session: string;
 	state: string;
-	phase: string | null;
+	taskType: string | null;
 	pid: number | null;
 	parent_agent: string | null;
 	depth: number;
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   tmux_session TEXT NOT NULL,
   state TEXT NOT NULL DEFAULT 'booting'
     CHECK(state IN ('booting','working','completed','stalled','zombie')),
-  phase TEXT CHECK(phase IS NULL OR phase IN ('spec','plan','implement','review','test','merge','research')),
+  task_type TEXT CHECK(phase IS NULL OR phase IN ('spec','plan','implement','review','test','merge','research')),
   pid INTEGER,
   parent_agent TEXT,
   depth INTEGER NOT NULL DEFAULT 0,
@@ -94,7 +94,7 @@ CREATE INDEX IF NOT EXISTS idx_sessions_state ON sessions(state);
 CREATE INDEX IF NOT EXISTS idx_sessions_run ON sessions(run_id)`;
 
 const MIGRATE_ADD_PHASE = `
-ALTER TABLE sessions ADD COLUMN phase TEXT
+ALTER TABLE sessions ADD COLUMN task_type TEXT
   CHECK(phase IS NULL OR phase IN ('spec','plan','implement','review','test','merge','research'))
 `;
 
@@ -123,7 +123,7 @@ function rowToSession(row: SessionRow): AgentSession {
 		beadId: row.task_id,
 		tmuxSession: row.tmux_session,
 		state: row.state as AgentState,
-		phase: (row.phase as import("../types.ts").AgentPhase) ?? null,
+		taskType: (row.taskType as import("../types.ts").TaskType) ?? null,
 		pid: row.pid,
 		parentAgent: row.parent_agent,
 		depth: row.depth,
@@ -201,7 +201,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 			$task_id: string;
 			$tmux_session: string;
 			$state: string;
-			$phase: string | null;
+			$task_type: string | null;
 			$pid: number | null;
 			$parent_agent: string | null;
 			$depth: number;
@@ -214,11 +214,11 @@ export function createSessionStore(dbPath: string): SessionStore {
 	>(`
 		INSERT INTO sessions
 			(id, agent_name, capability, worktree_path, branch_name, task_id,
-			 tmux_session, state, phase, pid, parent_agent, depth, run_id,
+			 tmux_session, state, task_type, pid, parent_agent, depth, run_id,
 			 started_at, last_activity, escalation_level, stalled_since)
 		VALUES
 			($id, $agent_name, $capability, $worktree_path, $branch_name, $task_id,
-			 $tmux_session, $state, $phase, $pid, $parent_agent, $depth, $run_id,
+			 $tmux_session, $state, $task_type, $pid, $parent_agent, $depth, $run_id,
 			 $started_at, $last_activity, $escalation_level, $stalled_since)
 		ON CONFLICT(agent_name) DO UPDATE SET
 			id = excluded.id,
@@ -228,7 +228,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 			task_id = excluded.task_id,
 			tmux_session = excluded.tmux_session,
 			state = excluded.state,
-			phase = excluded.phase,
+			task_type = excluded.taskType,
 			pid = excluded.pid,
 			parent_agent = excluded.parent_agent,
 			depth = excluded.depth,
@@ -260,8 +260,8 @@ export function createSessionStore(dbPath: string): SessionStore {
 		UPDATE sessions SET state = $state WHERE agent_name = $agent_name
 	`);
 
-	const updatePhaseStmt = db.prepare<void, { $agent_name: string; $phase: string | null }>(`
-		UPDATE sessions SET phase = $phase WHERE agent_name = $agent_name
+	const updateTaskTypeStmt = db.prepare<void, { $agent_name: string; $task_type: string | null }>(`
+		UPDATE sessions SET task_type = $task_type WHERE agent_name = $agent_name
 	`);
 
 	const updateLastActivityStmt = db.prepare<void, { $agent_name: string; $last_activity: string }>(`
@@ -296,7 +296,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 				$task_id: session.beadId,
 				$tmux_session: session.tmuxSession,
 				$state: session.state,
-				$phase: session.phase,
+				$task_type: session.taskType,
 				$pid: session.pid,
 				$parent_agent: session.parentAgent,
 				$depth: session.depth,
@@ -332,8 +332,8 @@ export function createSessionStore(dbPath: string): SessionStore {
 			updateStateStmt.run({ $agent_name: agentName, $state: state });
 		},
 
-		updatePhase(agentName: string, phase: import("../types.ts").AgentPhase | null): void {
-			updatePhaseStmt.run({ $agent_name: agentName, $phase: phase });
+		updateTaskType(agentName: string, taskType: import("../types.ts").TaskType | null): void {
+			updateTaskTypeStmt.run({ $agent_name: agentName, $task_type: taskType });
 		},
 
 		updateLastActivity(agentName: string): void {

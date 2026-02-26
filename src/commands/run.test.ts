@@ -71,7 +71,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "task-1",
 		tmuxSession: "overstory-test-agent",
 		state: "working",
-			phase: null,
+			taskType: null,
 		pid: 12345,
 		parentAgent: null,
 		depth: 0,
@@ -222,7 +222,7 @@ describe("show run details", () => {
 				runId,
 				capability: "builder",
 				state: "working",
-			phase: null,
+			taskType: null,
 			}),
 		);
 		sessionStore.upsert(
@@ -232,7 +232,7 @@ describe("show run details", () => {
 				runId,
 				capability: "scout",
 				state: "completed",
-			phase: null,
+			taskType: null,
 			}),
 		);
 
@@ -267,7 +267,7 @@ describe("show run details", () => {
 				runId,
 				capability: "reviewer",
 				state: "stalled",
-			phase: null,
+			taskType: null,
 			}),
 		);
 

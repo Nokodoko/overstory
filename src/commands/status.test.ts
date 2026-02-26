@@ -31,7 +31,7 @@ function makeAgent(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "task-1",
 		tmuxSession: "overstory-test-builder",
 		state: "working",
-			phase: null,
+			taskType: null,
 		pid: 12345,
 		parentAgent: null,
 		depth: 0,
