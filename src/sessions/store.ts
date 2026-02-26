@@ -161,7 +161,7 @@ export function createSessionStore(dbPath: string): SessionStore {
 	// Configure for concurrent access from multiple agent processes.
 	db.exec("PRAGMA journal_mode = WAL");
 	db.exec("PRAGMA synchronous = NORMAL");
-	db.exec("PRAGMA busy_timeout = 5000");
+	db.exec("PRAGMA busy_timeout = 10000");
 
 	// Create schema
 	db.exec(CREATE_TABLE);
@@ -388,7 +388,7 @@ export function createRunStore(dbPath: string): RunStore {
 	// Configure for concurrent access from multiple agent processes.
 	db.exec("PRAGMA journal_mode = WAL");
 	db.exec("PRAGMA synchronous = NORMAL");
-	db.exec("PRAGMA busy_timeout = 5000");
+	db.exec("PRAGMA busy_timeout = 10000");
 
 	// Create schema (idempotent — safe if SessionStore already created these)
 	db.exec(CREATE_RUNS_TABLE);
