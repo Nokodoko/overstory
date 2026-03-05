@@ -102,7 +102,7 @@ async function zellijCommand(
  */
 export async function createSession(
 	name: string,
-	cwd: string,
+	_cwd: string,
 	command: string,
 	env?: Record<string, string>,
 ): Promise<number> {
@@ -188,11 +188,7 @@ export async function listSessions(): Promise<Array<{ name: string; pid: number 
 	}
 
 	// Fallback: check if overstory session exists
-	const { exitCode, stdout } = await runCommand([
-		"zellij",
-		"list-sessions",
-		"--no-formatting",
-	]);
+	const { exitCode, stdout } = await runCommand(["zellij", "list-sessions", "--no-formatting"]);
 
 	if (exitCode !== 0) {
 		return [];
@@ -222,11 +218,7 @@ export async function listSessions(): Promise<Array<{ name: string; pid: number 
 export async function getPanePid(name: string): Promise<number | null> {
 	// Try pgrep for a process matching the agent pattern
 	// This is best-effort since zellij doesn't expose PIDs like tmux
-	const { exitCode, stdout } = await runCommand([
-		"pgrep",
-		"-f",
-		`claude.*${name}|${name}`,
-	]);
+	const { exitCode, stdout } = await runCommand(["pgrep", "-f", `claude.*${name}|${name}`]);
 
 	if (exitCode !== 0 || stdout.trim().length === 0) {
 		return null;
@@ -404,9 +396,7 @@ export async function isSessionAlive(name: string): Promise<boolean> {
 			}>;
 		};
 
-		return state.agents.some(
-			(agent) => agent.pane_name === name && agent.status === "active",
-		);
+		return state.agents.some((agent) => agent.pane_name === name && agent.status === "active");
 	} catch {
 		return false;
 	}
@@ -423,15 +413,11 @@ export async function isSessionAlive(name: string): Promise<boolean> {
  * @param lines - Number of lines to capture (default 50)
  * @returns The trimmed pane content, or null if capture fails
  */
-export async function capturePaneContent(name: string, lines = 50): Promise<string | null> {
+export async function capturePaneContent(_name: string, lines = 50): Promise<string | null> {
 	// Create a temp file for dump output
 	const tmpFile = `/tmp/zellij-capture-${Date.now()}.txt`;
 
-	const { exitCode } = await zellijCommand([
-		"action",
-		"dump-screen",
-		tmpFile,
-	]);
+	const { exitCode } = await zellijCommand(["action", "dump-screen", tmpFile]);
 
 	if (exitCode !== 0) {
 		return null;
@@ -508,17 +494,12 @@ export async function sendKeys(name: string, keys: string): Promise<void> {
 	// For now, write to the session's stdin via a different approach:
 	// Use zellij action write to send bytes directly
 	if (flatKeys.length > 0) {
-		const { exitCode, stderr } = await zellijCommand([
-			"action",
-			"write-chars",
-			flatKeys,
-		]);
+		const { exitCode, stderr } = await zellijCommand(["action", "write-chars", flatKeys]);
 
 		if (exitCode !== 0) {
-			throw new AgentError(
-				`Failed to write to zellij pane "${name}": ${stderr.trim()}`,
-				{ agentName: name },
-			);
+			throw new AgentError(`Failed to write to zellij pane "${name}": ${stderr.trim()}`, {
+				agentName: name,
+			});
 		}
 	}
 
@@ -530,9 +511,8 @@ export async function sendKeys(name: string, keys: string): Promise<void> {
 	]);
 
 	if (enterExitCode !== 0) {
-		throw new AgentError(
-			`Failed to send Enter to zellij pane "${name}": ${enterStderr.trim()}`,
-			{ agentName: name },
-		);
+		throw new AgentError(`Failed to send Enter to zellij pane "${name}": ${enterStderr.trim()}`, {
+			agentName: name,
+		});
 	}
 }

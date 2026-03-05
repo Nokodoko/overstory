@@ -275,7 +275,7 @@ function makeCoordinatorSession(overrides: Partial<AgentSession> = {}): AgentSes
 		beadId: "",
 		tmuxSession: "overstory-test-project-coordinator",
 		state: "working",
-			taskType: null,
+		taskType: null,
 		pid: 99999,
 		parentAgent: null,
 		depth: 0,

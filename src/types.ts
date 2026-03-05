@@ -165,7 +165,7 @@ export type TaskType = "spec" | "plan" | "implement" | "review" | "test" | "merg
 /** Infer TaskType from task description or title */
 export function inferTaskType(text: string): TaskType | null {
 	const lower = text.toLowerCase();
-	
+
 	// Order matters - more specific matches first
 	if (/\b(spec|specification|define|requirements?)\b/.test(lower)) return "spec";
 	if (/\b(plan|design|architect|outline)\b/.test(lower)) return "plan";
@@ -174,7 +174,7 @@ export function inferTaskType(text: string): TaskType | null {
 	if (/\b(merge|pr|pull.?request)\b/.test(lower)) return "merge";
 	if (/\b(research|investigate|explore|analyze)\b/.test(lower)) return "research";
 	if (/\b(implement|build|create|add|fix|update|refactor|write)\b/.test(lower)) return "implement";
-	
+
 	return null;
 }
 

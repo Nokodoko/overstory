@@ -38,7 +38,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "task-1",
 		tmuxSession: "overstory-test-agent",
 		state: "booting",
-			taskType: null,
+		taskType: null,
 		pid: 12345,
 		parentAgent: null,
 		depth: 0,
@@ -198,7 +198,7 @@ describe("getActive", () => {
 				agentName: "late",
 				id: "s-2",
 				state: "working",
-			taskType: null,
+				taskType: null,
 				startedAt: "2026-01-15T12:00:00.000Z",
 			}),
 		);
@@ -207,7 +207,7 @@ describe("getActive", () => {
 				agentName: "early",
 				id: "s-1",
 				state: "working",
-			taskType: null,
+				taskType: null,
 				startedAt: "2026-01-15T10:00:00.000Z",
 			}),
 		);

@@ -39,7 +39,7 @@ function makeSession(overrides: Partial<AgentSession> = {}): AgentSession {
 		beadId: "test-task",
 		tmuxSession: "overstory-test-agent",
 		state: "booting",
-			taskType: null,
+		taskType: null,
 		pid: ALIVE_PID,
 		parentAgent: null,
 		depth: 0,
@@ -329,7 +329,7 @@ describe("transitionState", () => {
 	test("advances from booting to working", () => {
 		const check = {
 			state: "working" as const,
-					taskType: null,
+			taskType: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -360,7 +360,7 @@ describe("transitionState", () => {
 	test("never regresses from stalled to working", () => {
 		const check = {
 			state: "working" as const,
-					taskType: null,
+			taskType: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -376,7 +376,7 @@ describe("transitionState", () => {
 	test("never regresses from zombie to booting", () => {
 		const check = {
 			state: "booting" as const,
-					taskType: null,
+			taskType: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,
@@ -392,7 +392,7 @@ describe("transitionState", () => {
 	test("same state stays the same", () => {
 		const check = {
 			state: "working" as const,
-					taskType: null,
+			taskType: null,
 			agentName: "a",
 			timestamp: "",
 			tmuxAlive: true,

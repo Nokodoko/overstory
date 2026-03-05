@@ -542,7 +542,7 @@ describe("synthetic session-end events", () => {
 				id: "session-123",
 				runId: "run-456",
 				state: "working",
-			taskType: null,
+				taskType: null,
 			}),
 		];
 		await Bun.write(sessionsPath, JSON.stringify(sessions));

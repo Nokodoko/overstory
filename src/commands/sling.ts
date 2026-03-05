@@ -493,10 +493,7 @@ export async function slingCommand(args: string[]): Promise<void> {
 
 		if (alias && config.agents.userAgentDir) {
 			// Try to resolve user agent file as Layer 1 base
-			const userContent = await resolveUserAgent(
-				config.agents.userAgentDir,
-				alias.userAgent,
-			);
+			const userContent = await resolveUserAgent(config.agents.userAgentDir, alias.userAgent);
 			if (userContent) {
 				// Use the user agent body (strip frontmatter) as the base definition
 				const { body } = parseAgentFrontmatter(userContent);

@@ -42,7 +42,7 @@ function makeJsonSession(overrides: Record<string, unknown> = {}): Record<string
 		beadId: "task-1",
 		tmuxSession: "overstory-test-agent",
 		state: "working",
-			taskType: null,
+		taskType: null,
 		pid: 12345,
 		parentAgent: null,
 		depth: 0,

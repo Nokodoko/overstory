@@ -22,7 +22,6 @@ import { loadConfig } from "../config.ts";
 import { AgentError, ValidationError } from "../errors.ts";
 import { openSessionStore } from "../sessions/compat.ts";
 import type { AgentSession } from "../types.ts";
-import { inferTaskType } from "../types.ts";
 import { createSession, isSessionAlive, killSession, sendKeys } from "../worktree/multiplexer.ts";
 import { isRunningAsRoot } from "./sling.ts";
 
