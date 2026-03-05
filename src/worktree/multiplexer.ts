@@ -32,16 +32,20 @@ export async function detectMultiplexer(): Promise<Multiplexer> {
 	}
 
 	// Check if zellij overstory session exists
-	const proc = Bun.spawn(["zellij", "list-sessions", "--no-formatting"], {
-		stdout: "pipe",
-		stderr: "pipe",
-	});
-	const exitCode = await proc.exited;
-	if (exitCode === 0) {
-		const stdout = await new Response(proc.stdout).text();
-		if (stdout.includes("overstory")) {
-			return "zellij";
+	try {
+		const proc = Bun.spawn(["zellij", "list-sessions", "--no-formatting"], {
+			stdout: "pipe",
+			stderr: "pipe",
+		});
+		const exitCode = await proc.exited;
+		if (exitCode === 0) {
+			const stdout = await new Response(proc.stdout).text();
+			if (stdout.includes("overstory")) {
+				return "zellij";
+			}
 		}
+	} catch {
+		// zellij not installed or not in PATH — fall through to default
 	}
 
 	// Default to zellij as per user preference

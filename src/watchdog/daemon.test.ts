@@ -1951,7 +1951,7 @@ describe("run completion detection", () => {
 			expect(runCompleteEvent).toBeDefined();
 			const data = JSON.parse(runCompleteEvent?.data ?? "{}") as Record<string, unknown>;
 			expect(data.capabilities).toEqual(["builder"]);
-			expect(data.taskType).toBe("builder");
+			expect(data.phase).toBe("builder");
 		} finally {
 			store.close();
 		}

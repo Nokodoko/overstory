@@ -12,6 +12,7 @@ import { initCommand, OVERSTORY_GITIGNORE, OVERSTORY_README } from "./init.ts";
  */
 
 const AGENT_DEF_FILES = [
+	"agentic_instructions.md",
 	"scout.md",
 	"builder.md",
 	"reviewer.md",
@@ -46,7 +47,7 @@ describe("initCommand: agent-defs deployment", () => {
 		await cleanupTempDir(tempDir);
 	});
 
-	test("creates .overstory/agent-defs/ with all 8 agent definition files", async () => {
+	test("creates .overstory/agent-defs/ with all 9 agent definition files", async () => {
 		await initCommand([]);
 
 		const agentDefsDir = join(tempDir, ".overstory", "agent-defs");

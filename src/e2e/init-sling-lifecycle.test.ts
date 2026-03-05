@@ -20,6 +20,7 @@ import type { OverlayConfig } from "../types.ts";
  */
 
 const EXPECTED_AGENT_DEFS = [
+	"agentic_instructions.md",
 	"builder.md",
 	"coordinator.md",
 	"lead.md",
@@ -77,7 +78,7 @@ describe("E2E: init→sling lifecycle on external project", () => {
 		const gitignoreFile = Bun.file(join(overstoryDir, ".gitignore"));
 		expect(await gitignoreFile.exists()).toBe(true);
 
-		// agent-defs/ contains all 8 agent definition files
+		// agent-defs/ contains all 9 agent definition files
 		const agentDefsDir = join(overstoryDir, "agent-defs");
 		const agentDefFiles = (await readdir(agentDefsDir)).filter((f) => f.endsWith(".md")).sort();
 		expect(agentDefFiles).toEqual(EXPECTED_AGENT_DEFS);
